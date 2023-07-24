@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+
 # Create your views here.
 from django.http import HttpResponse 
 def index(request): 
@@ -7,7 +8,9 @@ def index(request):
 
 def home(request):
     path = request.path
-    response = HttpResponse("This works")
+    user = request.user
+    string_response = "Hello: " + str(path) + str(user)
+    response = HttpResponse(string_response)
     return response
 
 def about(request):
