@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from demoapp.forms import BookingForm
 
 
 # Create your views here.
@@ -14,9 +15,8 @@ def home(request):
     return response
 
 def about(request):
-    path = request.path
-    response = HttpResponse("About us")
-    return response
+    context = {'about': 'Additional information'}
+    return render(request, "about.html", context)
 
 def menu(request):
     path = request.path
@@ -27,3 +27,12 @@ def book(request):
     path = request.path
     response = HttpResponse("Make a booking")
     return response
+
+def form_view(request):
+    form = BookingForm()
+    if request.method == 'POST':
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {"form" : form}
+    return render(request, "booking.html", context)
